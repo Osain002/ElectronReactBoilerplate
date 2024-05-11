@@ -11,6 +11,7 @@ class GridBuilder extends CanvasController {
     this.beat_length_px = 20;
 
     // Settings
+    // TODO link this to the form
     this.time_signature = {numerator: 4, denominator: 4};
     this.tracks = [];
 

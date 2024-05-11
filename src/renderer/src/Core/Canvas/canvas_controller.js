@@ -1,13 +1,14 @@
-
 class CanvasController {
 
   constructor(canvas) {
     this.points = {};
     this.canvas = canvas;
-    this.pixel_density = this.set_density();
+    this.pixel_density = 1//this.set_density();
     this.ctx = canvas.getContext("2d", { willReadFrequently: true });
     this.width = this.canvas.width;
     this.height = this.canvas.height;
+    this.is_dragging = false;
+    this.dragging_mode = null;
   }
 
   // Get the context
@@ -45,11 +46,14 @@ class CanvasController {
 
   // Get click position on canvas
   mouse_position(e) {
-    let rect = this.canvas.getBoundingClientRect();
+    var rect = this.canvas.getBoundingClientRect(), // abs. size of element
+    scaleX = this.canvas.width / rect.width,    // relationship bitmap vs. element for x
+    scaleY = this.canvas.height / rect.height;  // relationship bitmap vs. element for y
+
     return {
-      x: (e.clientX - rect.left)*this.pixel_density,
-      y: (e.clientY - rect.top)*this.pixel_density
-    };
+      x: (e.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
+      y: (e.clientY - rect.top) * scaleY     // been adjusted to be relative to element
+    }
   }
 
   // Clear the canvas and points 
@@ -80,6 +84,18 @@ class CanvasController {
     this.ctx.stroke();
   }
 
+  // Draw a rectangle
+  draw_rectangle(x, y, width, height, strokeColor = 'black', fillColor = 'transparent', lineWidth = 1) {
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = strokeColor;
+    this.ctx.fillStyle = fillColor;
+    this.ctx.lineWidth = lineWidth;
+    this.ctx.rect(x, y, width, height);
+    if (fillColor !== 'transparent') {
+      this.ctx.fill();
+    }
+    this.ctx.stroke();
+  }
 }
 
 export default CanvasController;

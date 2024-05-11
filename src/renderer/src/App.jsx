@@ -12,10 +12,10 @@ import FormOverlay from './components/Overlays/FormOverlay';
 import trackReducer from './Kernel/Tracks/TrackReducer';
 import GridDivisions from './Kernel/ProjectView/GridDivisions';
 import Project from './Kernel/Project/Project';
+import ToolTypes from './Kernel/ToolTypes';
 
 // Create an app context
 export const AppContext = createContext(null);
-
 
 function App() {
 
@@ -25,9 +25,13 @@ function App() {
   const [tracks, trackDispatch] = useReducer(trackReducer, []);
   const [gridType, setGridType] = useState(GridDivisions.BEATS_BARS);
 
+  // Which tool are we using
+  const [currentTool, setTool] = useState(ToolTypes.mouse); 
+
   // Form overlay state handlers
   const [formType, setFormType] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
+
 
   // Show the form overlay
   function show_form_overlay(type) {
@@ -46,7 +50,9 @@ function App() {
   const AppContextValues = {
     
     appContext: {
-      setShowOverlay
+      setShowOverlay,
+      currentTool,
+      setTool
     },
 
     projectContext: {

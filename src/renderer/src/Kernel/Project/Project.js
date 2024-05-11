@@ -3,6 +3,9 @@
 // This class creates project data
 //
 // ===========================================================
+import Tracks from "../Tracks/TracksManager";
+// ===========================================================
+
 
 class Project {
 
@@ -11,11 +14,10 @@ class Project {
       return Project.instance;
     }
 
-    this.name = null;
-    this.location = null;
-    this.tracks = [];
-    this.num_tracks = 0;
-    this.time_signatures = [];
+    this._name = null;
+    this._location = null;
+    this._time_signatures = [];
+    this._tracks = new Tracks();
 
     Project.instance = this;
   }
@@ -43,14 +45,12 @@ class Project {
   }
 
   //==== Tracks
-  addTrack(track) {
-    this.tracks.push(track);
-    this.num_tracks++;
+
+  // Get all tracks
+  tracks() {
+    return this._tracks;
   }
 
-  getTracks() {
-    return this.tracks;
-  }
 }
 
 export default Project;

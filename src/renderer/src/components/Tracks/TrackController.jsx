@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../../App';
 
 const Slider = () => {
   const [value, setValue] = useState(50);
@@ -20,10 +21,28 @@ const Slider = () => {
 };
 
 
-const TrackController = ({ data }) => {
+const TrackController = ({ data, onClick, selected }) => {
+
+  // Get the project
+  const { projectContext } = useContext(AppContext);
+  const project = projectContext.project;
+
+  const [highlight, setHighlight] = useState("bg-gray-800")
+
+  // Highlight this track if it is selected
+  useEffect(() => {
+    if(selected == data.id) {
+      setHighlight("bg-gray-600")
+    } else {
+      setHighlight("bg-gray-800")
+    }
+  }, [selected]);
 
   return (
-    <div className="flex items-center justify-between p-4 max-h-10 border-b bg-gray-800 text-white track_controller">
+    <div 
+      className={"flex items-center justify-between p-4 max-h-10 border-b text-white track_controller " + highlight }
+      onClick={onClick}
+    >
       <div className="flex items-center w-1/2">
         <h3 className="text-sm font-semibold">{data.name}</h3>
       </div>

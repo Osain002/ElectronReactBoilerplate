@@ -1,0 +1,54 @@
+"filename", "language", "JavaScript", "JavaScript JSX", "CSS", "HTML", "comment", "blank", "total"
+"/Users/otissaint/Documents/ElecDaw/src/core/Files/FileDepths.js", "JavaScript", 6, 0, 0, 0, 0, 1, 7
+"/Users/otissaint/Documents/ElecDaw/src/core/Files/FileStasher.js", "JavaScript", 32, 0, 0, 0, 8, 10, 50
+"/Users/otissaint/Documents/ElecDaw/src/core/Files/FileSystem.js", "JavaScript", 5, 0, 0, 0, 6, 3, 14
+"/Users/otissaint/Documents/ElecDaw/src/core/Files/LocalFileSystem.js", "JavaScript", 49, 0, 0, 0, 11, 9, 69
+"/Users/otissaint/Documents/ElecDaw/src/core/Files/PathSplitter.js", "JavaScript", 34, 0, 0, 0, 6, 8, 48
+"/Users/otissaint/Documents/ElecDaw/src/core/Time/DateTools.js", "JavaScript", 50, 0, 0, 0, 14, 18, 82
+"/Users/otissaint/Documents/ElecDaw/src/core/Time/FakeTime.js", "JavaScript", 16, 0, 0, 0, 9, 9, 34
+"/Users/otissaint/Documents/ElecDaw/src/core/Time/RealTime.js", "JavaScript", 7, 0, 0, 0, 7, 6, 20
+"/Users/otissaint/Documents/ElecDaw/src/core/Time/Timepiece.js", "JavaScript", 10, 0, 0, 0, 7, 6, 23
+"/Users/otissaint/Documents/ElecDaw/src/kernel/ProjectManagement/Project.js", "JavaScript", 18, 0, 0, 0, 9, 7, 34
+"/Users/otissaint/Documents/ElecDaw/src/kernel/ProjectManagement/ProjectManager.js", "JavaScript", 14, 0, 0, 0, 9, 8, 31
+"/Users/otissaint/Documents/ElecDaw/src/main/main.js", "JavaScript", 31, 0, 0, 0, 5, 12, 48
+"/Users/otissaint/Documents/ElecDaw/src/main/menubuilder.js", "JavaScript", 29, 0, 0, 0, 5, 4, 38
+"/Users/otissaint/Documents/ElecDaw/src/preload/preload.js", "JavaScript", 0, 0, 0, 0, 0, 1, 1
+"/Users/otissaint/Documents/ElecDaw/src/renderer/index.html", "HTML", 0, 0, 0, 12, 0, 1, 13
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/App.css", "CSS", 0, 0, 3, 0, 1, 1, 5
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/App.jsx", "JavaScript JSX", 0, 48, 0, 0, 8, 18, 74
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/AppView.jsx", "JavaScript JSX", 0, 16, 0, 0, 0, 4, 20
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/Canvas/GridBuilder.js", "JavaScript", 33, 0, 0, 0, 8, 16, 57
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/Canvas/canvas_controller.js", "JavaScript", 77, 0, 0, 0, 10, 15, 102
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/Forms/forms.js", "JavaScript", 14, 0, 0, 0, 2, 6, 22
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/Hooks/dimensions.jsx", "JavaScript JSX", 0, 21, 0, 0, 0, 7, 28
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/IPC/IPCListener.js", "JavaScript", 11, 0, 0, 0, 8, 4, 23
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/components/Forms/BasicFormFields.jsx", "JavaScript JSX", 0, 83, 0, 0, 0, 11, 94
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/components/Forms/ColorPicker.jsx", "JavaScript JSX", 0, 38, 0, 0, 0, 6, 44
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Core/components/OverlayBase/Overlay.jsx", "JavaScript JSX", 0, 16, 0, 0, 8, 4, 28
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/PianoRoll/PianoRollDrawer.js", "JavaScript", 8, 0, 0, 0, 0, 5, 13
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Project/Project.js", "JavaScript", 28, 0, 0, 0, 14, 15, 57
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Project/ProjectManager.js", "JavaScript", 14, 0, 0, 0, 9, 8, 31
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/ProjectView/GridDivisions.js", "JavaScript", 12, 0, 0, 0, 3, 5, 20
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/ToolTypes.js", "JavaScript", 11, 0, 0, 0, 2, 5, 18
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/Drawing/TrackDrawer.js", "JavaScript", 176, 0, 0, 0, 62, 82, 320
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/Track/AudioTrack.js", "JavaScript", 9, 0, 0, 0, 0, 5, 14
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/Track/Track.js", "JavaScript", 33, 0, 0, 0, 6, 11, 50
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/Track/VirtualInstrumentTrack.js", "JavaScript", 21, 0, 0, 0, 1, 9, 31
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/TrackFactory.js", "JavaScript", 10, 0, 0, 0, 1, 1, 12
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/TrackReducer.js", "JavaScript", 10, 0, 0, 0, 1, 6, 17
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/TrackTypes.js", "JavaScript", 17, 0, 0, 0, 0, 5, 22
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/Kernel/Tracks/TracksManager.js", "JavaScript", 22, 0, 0, 0, 5, 8, 35
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Forms/FormFactory.jsx", "JavaScript JSX", 0, 16, 0, 0, 0, 3, 19
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Forms/NewTrackForm.jsx", "JavaScript JSX", 0, 39, 0, 0, 6, 9, 54
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Forms/TransportForm.jsx", "JavaScript JSX", 0, 53, 0, 0, 3, 12, 68
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/MenuOverlayHandler.jsx", "JavaScript JSX", 0, 7, 0, 0, 0, 2, 9
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Overlays/FormOverlay.jsx", "JavaScript JSX", 0, 11, 0, 0, 0, 2, 13
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/PianoRoll/PianoRoll.jsx", "JavaScript JSX", 0, 15, 0, 0, 0, 6, 21
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Project/ProjectView.jsx", "JavaScript JSX", 0, 40, 0, 0, 11, 16, 67
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Project/TracksLayer.jsx", "JavaScript JSX", 0, 52, 0, 0, 11, 17, 80
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Tracks/TrackController.jsx", "JavaScript JSX", 0, 44, 0, 0, 2, 11, 57
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Tracks/TracksView.jsx", "JavaScript JSX", 0, 20, 0, 0, 1, 5, 26
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/components/Transport/TransportBar.jsx", "JavaScript JSX", 0, 24, 0, 0, 0, 3, 27
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/index.css", "CSS", 0, 0, 64, 0, 1, 10, 75
+"/Users/otissaint/Documents/ElecDaw/src/renderer/src/main.jsx", "JavaScript JSX", 0, 7, 0, 0, 0, 2, 9
+"Total", "-", 807, 550, 67, 12, 280, 458, 2174

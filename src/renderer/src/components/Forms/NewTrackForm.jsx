@@ -2,24 +2,28 @@ import React, { useContext, useState } from 'react'
 import { Select, Submit, TextInput } from '../../Core/components/Forms/BasicFormFields'
 import trackTypes from '../../Kernel/Tracks/TrackTypes';
 import { AppContext } from '../../App';
-import Track from '../../Kernel/Tracks/Track';
+import newTrack from '../../Kernel/Tracks/TrackFactory';
+import ColorPicker from '../../Core/components/Forms/ColorPicker';
 
 const NewTrackForm = () => {
 
   // Get the track dispatcher
   const { projectContext, appContext } = useContext(AppContext);
+  const project = projectContext.project;
 
   // Form value state holders
   const [trackName, setTrackName] = useState("Untitled Track");
   const [trackType, setTrackType] = useState(null);
+  const [colour, setColour] = useState("")
 
   // Add the new track
   function submit(e) {
 
     // Create a new empty track
     e.preventDefault();
-    const track_id = projectContext.project.num_tracks;
-    const track = new Track(track_id, trackName, trackType);
+    const track_id = project.tracks().getNumTracks();
+    const track = newTrack(trackType, track_id, trackName);
+    track.setColour(colour);
 
     // Add the track
     projectContext.trackDispatch({
@@ -37,7 +41,8 @@ const NewTrackForm = () => {
       <form onSubmit={submit}>
         <TextInput label={"Track Name"} required={false} onChange={e => setTrackName(e.target.value)}/>
         <Select label={"Track Type"} required={true} options={trackTypes} onChange={e => setTrackType(e.target.value)}/>
-        <Submit text={"Add"}/>
+        <ColorPicker label={"Colour"} onChange={setColour} />
+        <Submit text={"Add"} />
       </form>
     </div>
   )
