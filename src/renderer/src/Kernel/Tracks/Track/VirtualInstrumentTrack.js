@@ -1,3 +1,4 @@
+import { makeRegion } from "../Regions/Region";
 import trackTypes from "../TrackTypes";
 import TrackBase from "./Track";
 
@@ -8,27 +9,12 @@ class VirtualInstrumentTrack extends TrackBase {
     this.type = trackTypes.VIRTUAL_INST;
   }
 
-  // Add a new region
-  new_region(start_px, end_px, start_beat, end_beat) {
-    
-    const region = {
-      id: this.regions.length,
-      start: start_px,
-      end: end_px,
-      beats: {
-        start: start_beat,
-        end: end_beat
-      }
-    }
-
+  // Insert a new region
+  newRegion(event) {
+    const region = makeRegion(this, event);
     this.regions.push(region);
   }
-
-  add_region() {
-    
-  }
   
-
 }
 
 export default VirtualInstrumentTrack;

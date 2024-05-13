@@ -9,6 +9,7 @@ class TrackDrawer extends CanvasController {
 
     // Check if there is already an instance
     if (TrackDrawer.instance) {
+      console.log('instance exists')
       return TrackDrawer.instance;
     }
 
@@ -43,7 +44,6 @@ class TrackDrawer extends CanvasController {
   setMode(mode) {
     this.current_mode = mode;
   }
-
 
   //==== Click handlers
 
@@ -94,6 +94,13 @@ class TrackDrawer extends CanvasController {
     }
   }
 
+  // Handle the hover
+  handleHover(e) {
+    if (this.current_mode == ToolTypes.mouse) {
+      return this.detectEdge(e);
+    }
+  }
+
   // Handle dragging
   handleDrag(e) {
     if (this.dragging_mode == this.dragging_modes.resize) {
@@ -114,62 +121,56 @@ class TrackDrawer extends CanvasController {
   //==== Regions
 
   // Draw a new region
-  drawNewInstrumentRegion(e) {
-    
-    // Get the current track
-    const current_track = this.project.tracks().getSelectedTrack();
+  newInstrumentRegion(track, event) {
 
     // Ensure this is a virtual instrument track
-    if(current_track.type != trackTypes.VIRTUAL_INST) {
+    if(track.type != trackTypes.VIRTUAL_INST) {
       return alert("Cannot create region on non virtual instrument track");
     }
 
     // Get the click position
-    let mouse_position = this.mouse_position(e);
-    
+    let mouse_position = this.mouse_position(event);
+
     // Get the nearest beat to snap to
     let beat = this.nearestBeat(mouse_position);
 
     // Get the region position
     let start_x = beat*this.beat_length_px;
-    let start_y = current_track.id*this.track_height;
+    let start_y = track.id*this.track_height;
     let width = this.time_signature.numerator*this.beat_length_px;
 
     // Draw an empty region 
-    this.drawEmptyRegion(start_x, start_y, width, current_track.colour)
-
-    // Add a region to the track object
-    current_track.new_region(start_x, start_x + width);
+    this.drawEmptyRegion(start_x, start_y, width, track.colour)
+    
+    // Return the drawing information
+    return {start: start_x, end: start_x + width, y: start_y}
   }
 
   // Draw an empty region
   drawEmptyRegion(x, y, width, colour='red') {
-    return this.draw_rectangle(x, y, width, this.track_height, 'black', colour);
+    return this.draw_rectangle(x, y, width, this.track_height, 'black', colour, 1);
   }
 
   // Select this region
-  selectRegion(e) {
+  selectRegion(track, event) {
 
     // Make sure all regions are unselected
     this.unSelectAllRegions();
 
-    // Get the current track
-    const current_track = this.project.tracks().getSelectedTrack();
-
     // Get the region at this point
-    let mouse_position = this.mouse_position(e);
-    const region = current_track.getRegionAt(mouse_position.x);
+    let mouse_position = this.mouse_position(event);
+    const region = track.getRegionAt(mouse_position.x);
 
     // Make sure we have a region
     if(!region) {
       return this.unSelectAllRegions();
     }
 
-    let start_y = current_track.id*this.track_height;
-    let width = region.end - region.start;
+    let start_y = track.id*this.track_height;
+    let width = region.drawing_data.end - region.drawing_data.start;
 
     // Draw a rectangle around the selected region
-    return this.draw_rectangle(region.start, start_y, width, this.track_height, 'black', 'transparent', 10)
+    return this.draw_rectangle(region.drawing_data.start, start_y, width, this.track_height, 'black', 'transparent', 10)
 
   }
 
@@ -263,9 +264,9 @@ class TrackDrawer extends CanvasController {
 
       // Draw the empty region
       let y = track.id*this.track_height;
-      let width = region.end - region.start;
+      let width = region.drawing_data.end - region.drawing_data.start;
       
-      this.drawEmptyRegion(region.start, y, width, track.colour)
+      this.drawEmptyRegion(region.drawing_data.start, y, width, track.colour)
 
       // Draw the content
     }
@@ -280,6 +281,9 @@ class TrackDrawer extends CanvasController {
 
   // Detect if the mouse is near the edge of a region
   detectEdge(e) {
+
+    debugger;
+    
     // Get the mouse position
     let mouse_position = this.mouse_position(e);
     

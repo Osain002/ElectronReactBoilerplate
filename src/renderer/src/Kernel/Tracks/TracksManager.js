@@ -2,6 +2,7 @@
 class Tracks {
 
   constructor() {
+    this._drawer = null;
     this._selected_track = null;
     this.tracks = [];
   }
@@ -30,6 +31,12 @@ class Tracks {
   setSelectedTrack(track_id) {
     this._selected_track = this.tracks[track_id];
   }
+
+  // Set a track drawer
+  setTrackDrawer(drawer) {
+    this.drawer = drawer;
+  }
+  
 }
 
 export default Tracks;

@@ -1,3 +1,5 @@
+import TrackDrawer from "../Drawing/TrackDrawer";
+import { selectRegion } from "../Regions/Region";
 
 class TrackBase {
 
@@ -10,7 +12,7 @@ class TrackBase {
   }
 
   //==== Setup
-  
+
   // Set the track colour
   setColour(colour) {
     this.colour = colour;
@@ -31,7 +33,8 @@ class TrackBase {
   // Get region between at this point
   getRegionAt(position) {
     for(let region of this.regions) {
-      if(region.start < position && region.end > position) {
+      let drawing_data = region.drawing_data;
+      if(drawing_data.start < position && drawing_data.end > position) {
         return region
       }
     }
@@ -39,15 +42,10 @@ class TrackBase {
   }
 
   // Set the selected region
-  setSelectedRegion(id) {
-    this.selected_region = this.regions[id];
+  selectRegion(event) {
+    const region_id = selectRegion(this, event);
+    this.selected_region = this.regions[region_id];
   }
-
-  // Update a region
-  updateCurrentRegion() {
-    this.regions[this.selected_region.id] = this.selected_region;
-  }
-
 
 }
 
