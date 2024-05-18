@@ -1,5 +1,4 @@
-import TrackDrawer from "../Drawing/TrackDrawer";
-import { selectRegion } from "../Regions/Region";
+import { moveRegion, resizeRegion, selectRegion } from "../Regions/Region";
 
 class TrackBase {
 
@@ -8,6 +7,7 @@ class TrackBase {
     this.name = name;
     this.colour = '#FFFFF';
     this.regions = [];
+    this.height = 80;
     this.selected_region = null;
   }
 
@@ -42,9 +42,37 @@ class TrackBase {
   }
 
   // Set the selected region
-  selectRegion(event) {
-    const region_id = selectRegion(this, event);
-    this.selected_region = this.regions[region_id];
+  selectRegion(event, callback) {
+    const region = selectRegion(this, event);
+    this.selected_region = region;
+    if(callback) {
+      return callback(region);
+    }
+  }
+
+  //==== Region editing
+
+  // Resize region
+  resizeRegion(event) {
+    return resizeRegion(this, event);
+  }
+
+  // Move a region
+  moveRegion(event) {
+    return moveRegion(this, event)
+  }
+
+  // Update the selected region
+  updateSelectedRegion() {
+
+    // Get the id 
+    if(!this.selected_region) {
+      return;
+    } 
+    
+    // Update the region in the array
+    const id = this.selected_region.id
+    this.regions[id] = this.selected_region;
   }
 
 }

@@ -21,10 +21,22 @@ export function makeRegion(track, event) {
   return region;
 } 
 
-
 // Select a region
 export function selectRegion(track, event) {
   const drawer = new TrackDrawer();
   return drawer.selectRegion(track, event);
 }
 
+// Resize a region
+export function resizeRegion(track, event) {
+  const drawer = new TrackDrawer();
+  drawer.editRegionLength(track, event);
+  track.updateSelectedRegion();
+}
+
+// Move a region
+export function moveRegion(track, event) {
+  const drawer = new TrackDrawer();
+  drawer.moveRegion(track, event);
+  track.updateSelectedRegion();
+}

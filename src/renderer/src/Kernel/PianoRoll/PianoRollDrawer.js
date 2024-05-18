@@ -1,9 +1,10 @@
+import CanvasManager from "../../Core/Canvas/CanvasManager";
 import CanvasController from "../../Core/Canvas/canvas_controller";
 
 class PianoRollDrawer extends CanvasController {
 
-  constructor(region, canvas) {
-    super();
+  constructor(region) {
+    super(CanvasManager.getCanvas('pianoRoll'));
     this.region = region;
   }
 

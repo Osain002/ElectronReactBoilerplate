@@ -1,12 +1,14 @@
+import CanvasManager from "./CanvasManager";
+import canvasTypes from "./CanvasTypes";
 import CanvasController from "./canvas_controller";
 
 class GridBuilder extends CanvasController {
 
-  constructor(canvas, grid_type) {
-    super(canvas);
+  constructor() {
+
+    super(CanvasManager.getCanvas(canvasTypes.grid));
     
     // Canvas 
-    this.grid_type = grid_type;
     this.zoom_x = 1;
     this.beat_length_px = 20;
 
@@ -41,13 +43,10 @@ class GridBuilder extends CanvasController {
   }
 
   // Draw the track horizontals
-  draw_track_lines(num_tracks) {
-    console.log(num_tracks)
-
-    let track_height = 80;
-    for(let i=1; i<=num_tracks; i++) {
-      let grid_left = {x: 0, y: track_height*i};
-      let grid_right = {x: this.canvas.width, y: track_height*i};
+  draw_horizontal_lines(num_lines, height=80) {
+    for(let i=1; i<=num_lines; i++) {
+      let grid_left = {x: 0, y: height*i};
+      let grid_right = {x: this.canvas.width, y: height*i};
       this.draw_line_between(grid_left, grid_right, 0.3)
     }
   }

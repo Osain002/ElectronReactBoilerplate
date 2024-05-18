@@ -13,6 +13,7 @@ import trackReducer from './Kernel/Tracks/TrackReducer';
 import GridDivisions from './Kernel/ProjectView/GridDivisions';
 import Project from './Kernel/Project/Project';
 import ToolTypes from './Kernel/ToolTypes';
+import PianoRoll from './components/PianoRoll/PianoRoll';
 
 // Create an app context
 export const AppContext = createContext(null);
@@ -31,7 +32,6 @@ function App() {
   // Form overlay state handlers
   const [formType, setFormType] = useState(null);
   const [showOverlay, setShowOverlay] = useState(false);
-
 
   // Show the form overlay
   function show_form_overlay(type) {
@@ -66,6 +66,7 @@ function App() {
     <AppContext.Provider value={AppContextValues}>
       <AppView />
       <FormOverlay type={"new_track"} showOverlay={showOverlay} setShowOverlay={setShowOverlay}/>
+      <PianoRoll />
     </AppContext.Provider>
   )
 }

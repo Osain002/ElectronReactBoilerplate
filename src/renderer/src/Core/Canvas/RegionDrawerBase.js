@@ -1,11 +1,12 @@
-import CanvasManager from "../../../Core/Canvas/CanvasManager";
-import canvasTypes from "../../../Core/Canvas/CanvasTypes";
-import CanvasController from "../../../Core/Canvas/canvas_controller";
-import Project from "../../Project/Project";
-import ToolTypes from "../../ToolTypes";
-import trackTypes from "../TrackTypes";
+import Project from "../../Kernel/Project/Project";
+import ToolTypes from "../../Kernel/ToolTypes";
+import trackTypes from "../../Kernel/Tracks/TrackTypes";
+import CanvasManager from "./CanvasManager";
+import canvasTypes from "./CanvasTypes";
+import CanvasController from "./canvas_controller";
 
-class TrackDrawer extends CanvasController {
+
+class RegionDrawerBase extends CanvasController {
 
   constructor() {
 
@@ -79,7 +80,7 @@ class TrackDrawer extends CanvasController {
   //==== Regions
 
   // Draw a new region
-  newInstrumentRegion(track, event) {
+  newRegion(track, event) {
 
     // Ensure this is a virtual instrument track
     if(track.type != trackTypes.VIRTUAL_INST) {
@@ -289,4 +290,4 @@ class TrackDrawer extends CanvasController {
   static previous_mouse_position;
 }
 
-export default TrackDrawer;
+export default RegionDrawerBase;

@@ -7,7 +7,6 @@ class CanvasController {
     this.ctx = canvas.getContext("2d", { willReadFrequently: true });
     this.width = this.canvas.width;
     this.height = this.canvas.height;
-    this.is_dragging = false;
     this.dragging_mode = null;
   }
 

@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useContext, useState } from 'react';
 import GridBuilder from '../../Core/Canvas/GridBuilder';
 import { AppContext } from '../../App';
 import TracksLayer from './TracksLayer';
+import CanvasManager from '../../Core/Canvas/CanvasManager';
+import canvasTypes from '../../Core/Canvas/CanvasTypes';
 
 const ProjectView = () => {
 
@@ -32,10 +34,12 @@ const ProjectView = () => {
       setPxWidth(canvas.width);
       setPxHeight(canvas.height);
 
+      CanvasManager.addCanvas(canvasTypes.grid, canvas);
+
       // Redraw the grid
-      const grid_builder = new GridBuilder(canvas, projectContext.gridType);
+      const grid_builder = new GridBuilder();
       grid_builder.draw_grid_verticals();
-      grid_builder.draw_track_lines(project.tracks().getNumTracks());
+      grid_builder.draw_horizontal_lines(project.tracks().getNumTracks());
     };
 
     // Call updateCanvas initially
