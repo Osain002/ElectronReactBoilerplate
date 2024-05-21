@@ -3,8 +3,9 @@
 // This class creates project data
 //
 // ===========================================================
-import Tracks from "../Tracks/TracksManager";
 // ===========================================================
+
+import TracksManager from "../Tracks/TracksManager";
 
 
 class Project {
@@ -17,7 +18,7 @@ class Project {
     this._name = null;
     this._location = null;
     this._time_signatures = [];
-    this._tracks = new Tracks();
+    this._tracks = new TracksManager();
 
     Project.instance = this;
   }
@@ -34,23 +35,15 @@ class Project {
     this.location = location;
   }
 
-  // Serialise the project data
-  getData() {
-    return JSON.stringify(this);
-  }
-
-  //==== Time signatures
-  insertTimeSignatureChange() {
-    // Method implementation
-  }
-
   //==== Tracks
 
-  // Get all tracks
+  // Get the tracks
   tracks() {
     return this._tracks;
   }
 
+  // Static variables
+  static instance;
 }
 
 export default Project;

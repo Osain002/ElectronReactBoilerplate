@@ -31,7 +31,7 @@ const TrackController = ({ data, onClick, selected }) => {
 
   // Highlight this track if it is selected
   useEffect(() => {
-    if(selected == data.id) {
+    if(selected && selected.id == data.id) {
       setHighlight("bg-gray-600")
     } else {
       setHighlight("bg-gray-800")

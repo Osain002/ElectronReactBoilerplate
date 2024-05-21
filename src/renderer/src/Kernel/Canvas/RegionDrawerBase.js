@@ -1,16 +1,13 @@
-import Project from "../../Kernel/Project/Project";
-import ToolTypes from "../../Kernel/ToolTypes";
-import trackTypes from "../../Kernel/Tracks/TrackTypes";
+import Project from "../Project/Project";
+import ToolTypes from "../ToolTypes";
+import trackTypes from "../Tracks/TrackTypes";
 import CanvasManager from "./CanvasManager";
 import canvasTypes from "./CanvasTypes";
-import CanvasController from "./canvas_controller";
 
 
-class RegionDrawerBase extends CanvasController {
+class RegionDrawerBase {
 
   constructor() {
-
-    super(CanvasManager.getCanvas(canvasTypes.track));
 
     // Setup
     this.project = new Project();

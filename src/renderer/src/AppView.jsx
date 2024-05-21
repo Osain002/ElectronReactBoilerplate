@@ -1,5 +1,4 @@
 import './App.css'
-import PianoRoll from './components/PianoRoll/PianoRoll'
 import ProjectView from './components/Project/ProjectView'
 import TracksView from './components/Tracks/TracksView'
 import TransportBar from './components/Transport/TransportBar'

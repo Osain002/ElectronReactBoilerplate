@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Select, Submit, TextInput } from '../../Core/components/Forms/BasicFormFields'
 import trackTypes from '../../Kernel/Tracks/TrackTypes';
 import { AppContext } from '../../App';
-import newTrack from '../../Kernel/Tracks/TrackFactory';
+import newTrack from '../../Kernel/Tracks/TrackDataBuilder';
 import ColorPicker from '../../Core/components/Forms/ColorPicker';
 
 const NewTrackForm = () => {
@@ -21,15 +21,13 @@ const NewTrackForm = () => {
 
     // Create a new empty track
     e.preventDefault();
-    const track_id = project.tracks().getNumTracks();
-    const track = newTrack(trackType, track_id, trackName);
-    track.setColour(colour);
-
-    // Add the track
-    projectContext.trackDispatch({
-      type: "new",
-      track: track
-    });
+    
+    const tracks = projectContext.project.tracks();
+    tracks.getTrackBuilder()
+      .setName(trackName)
+      .setType(trackType)
+      .setColour(colour)
+      .add();
 
     // Close the overlay
     appContext.setShowOverlay(false);

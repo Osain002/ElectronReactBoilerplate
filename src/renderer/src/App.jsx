@@ -7,13 +7,11 @@ import AppView from './AppView'
 import IPCListener from './Core/IPC/IPCListener'
 
 // Hooks
-import { createContext, useEffect, useReducer, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import FormOverlay from './components/Overlays/FormOverlay';
-import trackReducer from './Kernel/Tracks/TrackReducer';
 import GridDivisions from './Kernel/ProjectView/GridDivisions';
 import Project from './Kernel/Project/Project';
 import ToolTypes from './Kernel/ToolTypes';
-import PianoRoll from './components/PianoRoll/PianoRoll';
 
 // Create an app context
 export const AppContext = createContext(null);
@@ -23,7 +21,6 @@ function App() {
   const project = new Project();
 
   // Hold the project data
-  const [tracks, trackDispatch] = useReducer(trackReducer, []);
   const [gridType, setGridType] = useState(GridDivisions.BEATS_BARS);
 
   // Which tool are we using
@@ -58,7 +55,6 @@ function App() {
     projectContext: {
       project,
       gridType,
-      trackDispatch
     }
   }
 
@@ -66,7 +62,7 @@ function App() {
     <AppContext.Provider value={AppContextValues}>
       <AppView />
       <FormOverlay type={"new_track"} showOverlay={showOverlay} setShowOverlay={setShowOverlay}/>
-      <PianoRoll />
+      {/* <PianoRoll /> */}
     </AppContext.Provider>
   )
 }

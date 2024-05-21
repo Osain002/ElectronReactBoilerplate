@@ -1,15 +1,10 @@
-import CanvasManager from "../../../Core/Canvas/CanvasManager";
-import canvasTypes from "../../../Core/Canvas/CanvasTypes";
-import CanvasController from "../../../Core/Canvas/canvas_controller";
 import Project from "../../Project/Project";
 import ToolTypes from "../../ToolTypes";
 import trackTypes from "../TrackTypes";
 
-class TrackDrawer extends CanvasController {
+class TrackDrawer {
 
   constructor() {
-
-    super(CanvasManager.getCanvas(canvasTypes.track));
 
     // Setup
     this.project = new Project();

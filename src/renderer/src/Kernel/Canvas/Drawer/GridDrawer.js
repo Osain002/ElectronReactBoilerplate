@@ -1,14 +1,10 @@
-import CanvasManager from "./CanvasManager";
-import canvasTypes from "./CanvasTypes";
-import CanvasController from "./canvas_controller";
+import CanvasDrawer from "../Base/CanvasDrawer";
 
-class GridBuilder extends CanvasController {
+class GridDrawer extends CanvasDrawer{
 
-  constructor() {
+  constructor(initialised_canvas) {
+    super(initialised_canvas);
 
-    super(CanvasManager.getCanvas(canvasTypes.grid));
-    
-    // Canvas 
     this.zoom_x = 1;
     this.beat_length_px = 20;
 
@@ -20,7 +16,7 @@ class GridBuilder extends CanvasController {
   }
 
   // Draw the time signature grid
-  draw_grid_verticals() {
+  drawGridVerticals() {
 
     let total_beats = Math.floor(this.canvas.width/this.beat_length_px);
 
@@ -43,7 +39,8 @@ class GridBuilder extends CanvasController {
   }
 
   // Draw the track horizontals
-  draw_horizontal_lines(num_lines, height=80) {
+  drawHorizontalLines(num_lines, height=80) {
+    console.log(num_lines, height)
     for(let i=1; i<=num_lines; i++) {
       let grid_left = {x: 0, y: height*i};
       let grid_right = {x: this.canvas.width, y: height*i};
@@ -53,4 +50,4 @@ class GridBuilder extends CanvasController {
 
 }
 
-export default GridBuilder;
+export default GridDrawer;
