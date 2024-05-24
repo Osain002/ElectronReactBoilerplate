@@ -47,6 +47,11 @@ class CanvasInitialiser {
     this.canvas.height = height;
   }
 
+  // Set the cursor type
+  setCursor(type) {
+    this.canvas.style.cursor = type;
+  }
+
   // Return a drawer and event handler
   init(type) {
     return {

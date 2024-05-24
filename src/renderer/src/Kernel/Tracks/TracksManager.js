@@ -4,7 +4,7 @@
 //
 //==========================================================
 import ArrayTools from "../../Core/Arrays/ArrayTools";
-import RegionsController from "../Regions/RegionsController";
+import Regions from "../Regions/Regions";
 import TrackDataBuilder from "./TrackDataBuilder";
 //==========================================================
 
@@ -47,6 +47,11 @@ class TracksManager {
       return TracksManager._tracks;
     }
   }
+
+  // Get a track
+  getTrack(track_id) {
+    return TracksManager._tracks[track_id];
+  }
   
   // Get the selected track
   getSelectedTrack() {
@@ -59,8 +64,16 @@ class TracksManager {
   }
   
   //==== Regions
+
+  // Get the regions
   regions() {
-    return new RegionsController(this);
+    return new Regions(this);
+  }
+
+  // Add a region to a track
+  addRegion(track, data) {
+    console.log(TracksManager._tracks[track]);
+    TracksManager._tracks[track].regions.push(data);
   }
 
   // Add the static variables

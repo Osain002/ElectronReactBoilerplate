@@ -2,39 +2,39 @@ import TracksManager from "../Tracks/TracksManager";
 
 class TrackCanvasConverter {
 
-  constructor() {
-    this._zoom = 1;
-    this.tracks = TracksManager._tracks;
-    this.beat_length_px = 20;
-  }
-
   // Convert a pixel value to a time
-  pxToTime(x_position) {
-    return Math.round(x_position / (this.beat_length_px*this._zoom));
+  static pxToTime(x_position) {
+    return Math.round(x_position / (this.beat_length_px));
   };
 
   // Convert a time to a pixel value
-  timeToPx(time) {
-    return time * (this.beat_length_px*this._zoom);
+  static timeToPx(time) {
+    return time * (this.beat_length_px);
   };
 
+  static nearestDivisionPx(x_position) {
+    console.log(x_position)
+    return Math.round(x_position / this.beat_length_px) * this.beat_length_px;
+  }
+
   // Get the track at the current vertical position
-  getTrack(px_height) {
+  static getTrack(px_height) {
 
     // Get the track ids
-    let ids = Object.keys(this.tracks);
+    let ids = Object.keys(TracksManager._tracks);
     let start_height = 0;
 
     // Go through the tracks
     for(let track_id of ids) {
 
       // Check if the click position is inside the track bounds
-      let track = this.tracks[track_id];
+      let track = TracksManager._tracks[track_id];
       let after_start = px_height > start_height; 
       let before_end = px_height < start_height + track.drawing_data.height;
 
       // Return the id of the track
       if (after_start && before_end) {
+        track.drawing_data.start_y = start_height;
         return track_id;
       }
 
@@ -45,6 +45,9 @@ class TrackCanvasConverter {
     // If we couldnt find a track
     return null;
   }
+
+  //==== Variables
+  static beat_length_px = 20;
 
 }
 

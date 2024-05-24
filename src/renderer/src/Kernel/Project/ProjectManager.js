@@ -22,8 +22,8 @@ class ProjectManager {
   }
 
   // Save a project
-  static save_project(data) {
-
+  static saveProject(data) {
+    console.log(JSON.stringify(data));
   }
 
 }

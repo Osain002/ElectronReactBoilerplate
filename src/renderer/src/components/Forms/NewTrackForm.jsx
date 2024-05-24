@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { Select, Submit, TextInput } from '../../Core/components/Forms/BasicFormFields'
 import trackTypes from '../../Kernel/Tracks/TrackTypes';
 import { AppContext } from '../../App';
-import newTrack from '../../Kernel/Tracks/TrackDataBuilder';
 import ColorPicker from '../../Core/components/Forms/ColorPicker';
 
 const NewTrackForm = () => {
@@ -23,6 +22,7 @@ const NewTrackForm = () => {
     e.preventDefault();
     
     const tracks = projectContext.project.tracks();
+    console.log(colour)
     tracks.getTrackBuilder()
       .setName(trackName)
       .setType(trackType)

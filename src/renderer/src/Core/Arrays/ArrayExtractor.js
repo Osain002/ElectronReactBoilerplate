@@ -2,10 +2,10 @@ class ArrayExtractor {
 
   // Strip this key into a new array
   static extractKey(array, key, merge_arrays=false) {
-    const result = [];
+    let result = [];
     for (const element of array) {
       if(merge_arrays) {
-        result = [...result, ...array];
+        result = [...result, ...element[key]];
       } else {
         result.push(element[key]);
       }
@@ -138,4 +138,4 @@ class ArrayExtractor {
   }
 }
 
-module.exports = ArrayExtractor;
+export default ArrayExtractor;

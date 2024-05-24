@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AppContext } from '../../App';
-import ToolTypes from '../../Kernel/ToolTypes';
-// import PianoRoll from '../PianoRoll/PianoRoll';
 import CanvasManager from '../../Kernel/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
+import ToolTypes from '../../Kernel/ToolTypes';
+import TracksManager from '../../Kernel/Tracks/TracksManager';
+import { canvasClick, canvasDoubleClick, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/Utils/TracksLayer/TracksLayerFunctions';
 
 const TracksLayer = ({width, pxWidth, pxHeight}) => {
   const { appContext, projectContext } = useContext(AppContext);
@@ -14,44 +15,13 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
   // Get the tracks
   const tracks = projectContext.project.tracks();
 
-  // State for showing/hiding the piano roll
-  // const [showPianoRoll, setShowPianoRoll] = useState(false);
-
   // Load the canvas
   useEffect(() => {
     const canvas = tracksCanvasRef.current;
     if (!canvas) return;
-    CanvasManager.addCanvas(canvasTypes.track, canvas);
+    let bundle = CanvasManager.addCanvas(canvasTypes.track, canvas);
+    bundle.drawer.drawRegions();
   }, []);
-
-  // Handle canvas double click
-  function canvasDoubleClick(event) {
-    let handler = CanvasManager.getEventHandler(canvasTypes.track);
-    handler.mouseEvent(event, function(x_position, track) {
-      console.log(x_position, track);
-    })
-
-  }
-
-  // Handle canvas click
-  function canvasClick(event) {
-
-  }
-
-  // Handle the canvas hover
-  function canvasMouseMove(event) {
-
-  }
-
-  // Handle mouse down
-  function canvasMouseDown(event) {
-
-  }
-
-  // Handle the mouse up event
-  function canvasMouseUp(event) {
-
-  }
 
   return (
     <>
@@ -61,11 +31,11 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
         height={pxHeight} 
         className='absolute top-0 left-0 h-full' 
         style={{ width: width + 'px' }} 
-        onDoubleClick={canvasDoubleClick}
-        onClick={canvasClick}
-        onMouseDown={canvasMouseDown}
-        onMouseMove={canvasMouseMove}
-        onMouseUp={canvasMouseUp}
+        onDoubleClick={(event) => canvasDoubleClick(tracks, appContext.currentTool, event)}
+        onClick={(event) => canvasClick(tracks, appContext.currentTool, event)}
+        onMouseDown={(event) => canvasMouseDown(tracks, appContext.currentTool, event)}
+        onMouseMove={(event) => canvasMouseMove(tracks, appContext.currentTool, event)}
+        onMouseUp={(event) => canvasMouseUp(tracks, appContext.currentTool, event)}
       />
       {/* <PianoRoll showPianoRoll={showPianoRoll} setShowPianoRoll={setShowPianoRoll} track={tracks.getSelectedTrack()}/> */}
     </>

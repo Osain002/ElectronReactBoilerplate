@@ -40,7 +40,7 @@ class TrackDataBuilder {
 
   // Set the colour
   setColour(colour) {
-    this.track_data.colour = colour;
+    this.track_data.drawing_data.colour = colour;
     return this;
   }
 

@@ -35,6 +35,10 @@ class Project {
     this.location = location;
   }
 
+  saveData() {
+    console.log(JSON.stringify(this));
+  }
+
   //==== Tracks
 
   // Get the tracks

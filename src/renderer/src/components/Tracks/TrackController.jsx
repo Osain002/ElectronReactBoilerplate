@@ -40,15 +40,16 @@ const TrackController = ({ data, onClick, selected }) => {
 
   return (
     <div 
-      className={"flex items-center justify-between p-4 max-h-10 border-b text-white track_controller " + highlight }
+      className={"flex flex-row h-10 border-b text-white track_controller " + highlight }
       onClick={onClick}
     >
-      <div className="flex items-center w-1/2">
+      <div className="flex items-center w-1/2 ml-1">
         <h3 className="text-sm font-semibold">{data.name}</h3>
       </div>
       <div className="flex items-center">
           <Slider />
       </div>
+      <div style={{width: '2px', height: '100%', backgroundColor: data.drawing_data.colour}}></div>
     </div>
   );
 };
