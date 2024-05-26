@@ -10,6 +10,7 @@ import ArrayExtractor from "../../Core/Arrays/ArrayExtractor";
 import trackTypes from "../Tracks/TrackTypes";
 import { EditorTypes } from "../Utils/EditorTypes";
 import TrackCanvasConverter from "../Utils/TrackCanvasConverter";
+import { nanoid } from 'nanoid';
 
 class Regions {
 
@@ -25,10 +26,11 @@ class Regions {
 
   // Add a new region starting at a given beat/time
   addRegion(track_id, start, init_beats=4) {
-    
+  
     // Get the track
     const track = this.manager.getTracksObject()[track_id];
     const region = {};
+    region.id = nanoid();
     region.track = track_id;
     region.beat_start = start;
     region.width = 4;
@@ -43,6 +45,27 @@ class Regions {
 
     // Add the region to the track
     this.addToTrack(track_id, region);
+  }
+
+  // Delete a selected region
+  deleteSelectedRegion() {
+    let regions = this.getAllRegions();
+    for(let region of regions) {
+      if(region.selected) {
+        this.deleteRegion(region.track, region.id);
+      }
+    }
+  }
+
+  deleteRegion(track, id) {
+    const tracks = this.manager.getTracksObject();
+    for(let i=0; i<tracks[track].regions.length; i++) {
+      let region = tracks[track].regions[i];
+      if(region.id == id) {
+        tracks[track].regions.splice(i, 1);
+        console.log('re', tracks[track].regions)
+      }
+    }
   }
 
   // Select a region
@@ -225,9 +248,6 @@ class Regions {
     }
   }
 
-  getRegionEditor(track, x_position) {
-    
-  }
 
   //==== Utils
 

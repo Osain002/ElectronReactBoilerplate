@@ -14,12 +14,10 @@ class RegionDrawer extends CanvasDrawer {
   }
 
   // Draw the regions
-  drawRegions() {
+  drawRegions(tracks) {
 
+    tracks = tracks.getTracksObject();
     this.clear();
-    
-    // Get the tracks 
-    const tracks = TracksManager._tracks;
     
     // Get through the regions
     let regions = [];

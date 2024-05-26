@@ -11,13 +11,13 @@ class RegionCanvasEventHandler extends CanvasEventHandler {
   }
 
   // Handle the mouse event
-  mouseEvent(event, callback, to_nearest_division=false) {
+  mouseEvent(event, tracks, callback, to_nearest_division=false) {
     
     // Get the click position data
     event.stopPropagation();
     let mouse_position = this.mouse_position(event);
     let x_position = mouse_position.x;
-    let track = TrackCanvasConverter.getTrack(mouse_position.y);
+    let track = TrackCanvasConverter.getTrack(tracks, mouse_position.y);
 
     // Check if we want to get the nearest beat to the click position
     if(to_nearest_division) {

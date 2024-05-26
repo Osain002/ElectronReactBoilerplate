@@ -1,4 +1,3 @@
-import TracksManager from "../Tracks/TracksManager";
 
 class TrackCanvasConverter {
 
@@ -18,17 +17,18 @@ class TrackCanvasConverter {
   }
 
   // Get the track at the current vertical position
-  static getTrack(px_height) {
+  static getTrack(tracks, px_height) {
 
     // Get the track ids
-    let ids = Object.keys(TracksManager._tracks);
+    let _tracks = tracks.getTracksObject()
+    let ids = Object.keys(_tracks);
     let start_height = 0;
 
     // Go through the tracks
     for(let track_id of ids) {
 
       // Check if the click position is inside the track bounds
-      let track = TracksManager._tracks[track_id];
+      let track = _tracks[track_id];
       let after_start = px_height > start_height; 
       let before_end = px_height < start_height + track.drawing_data.height;
 

@@ -6,7 +6,6 @@
 import {TracksManagerBase} from "./Base/TracksManagerBase";
 //==========================================================
 
-console.log('here tracks')
 class TracksManager extends TracksManagerBase {
 
   constructor() {
@@ -17,6 +16,11 @@ class TracksManager extends TracksManagerBase {
   // Get the tracks object
   getTracksObject() {
     return TracksManager._tracks;
+  }
+
+  // Add a region to a track
+  addRegion(track, data) {
+    TracksManager._tracks[track].regions.push(data);
   }
 
   // The tracks object
@@ -31,5 +35,4 @@ class Notes extends TracksManagerBase {
   }
 }
 
-let n = new Notes()
 export default TracksManager;

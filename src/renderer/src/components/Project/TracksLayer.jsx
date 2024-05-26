@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AppContext } from '../../App';
 import CanvasManager from '../../Kernel/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
-import { canvasClick, canvasDoubleClick, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/Utils/TracksLayer/TracksLayerFunctions';
+import { canvasClick, canvasDoubleClick, canvasKeyPress, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/Utils/TracksLayer/TracksLayerFunctions';
 import EditorOverlay from '../Overlays/EditorOverlay';
 
 const TracksLayer = ({width, pxWidth, pxHeight}) => {
@@ -22,7 +22,7 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
     const canvas = tracksCanvasRef.current;
     if (!canvas) return;
     let bundle = CanvasManager.addCanvas(canvasTypes.track, canvas);
-    bundle.drawer.drawRegions();
+    bundle.drawer.drawRegions(tracks);
   }, []);
 
   // Open an editor overlay
@@ -31,6 +31,7 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
     setShowEditor(true);
   }
 
+  // Extend the double click event
   function doubleClick(event) {
     let response = canvasDoubleClick(tracks, appContext.currentTool, event)
     console.log(response)
@@ -45,6 +46,7 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
         ref={tracksCanvasRef} 
         width={pxWidth} 
         height={pxHeight} 
+        tabIndex={0}
         className='absolute top-0 left-0 h-full' 
         style={{ width: width + 'px' }} 
         onDoubleClick={doubleClick}
@@ -52,6 +54,7 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
         onMouseDown={(event) => canvasMouseDown(tracks, appContext.currentTool, event)}
         onMouseMove={(event) => canvasMouseMove(tracks, appContext.currentTool, event)}
         onMouseUp={(event) => canvasMouseUp(tracks, appContext.currentTool, event)}
+        onKeyUp={(event) => canvasKeyPress(tracks, appContext.currentTool, event)}
       />
       <EditorOverlay data={editorData} showOverlay={showEditor} setShowOverlay={setShowEditor}/>
     </>

@@ -3,19 +3,19 @@ import {TracksManagerBase} from "../Tracks/Base/TracksManagerBase";
 class Notes extends TracksManagerBase{
 
   constructor() {
+    if(Notes._instance) {
+      return Notes._instance
+    }
+
     super(null)
     this.child = this;
     this.setupKeys();
+    Notes._instance = this;
   }
 
   getTracksObject() {
     return Notes._keys
   };
-
-  // Add a region
-  addRegion(track, data) {
-    this._tracks[track].regions.push(data);
-  }
 
   // Setup the keys
   setupKeys() {
@@ -27,7 +27,7 @@ class Notes extends TracksManagerBase{
     const semitoneRatio = Math.pow(2, 1/12);
 
     // Add the notes to the array
-    for (let i = 0; i < 88; i++) {
+    for (let i = 87; i >=0 ; i--) {
       const noteIndex = i % 12;
       const octave = Math.floor(i / 12);
       const frequency = baseFrequency * Math.pow(semitoneRatio, i);
@@ -43,8 +43,14 @@ class Notes extends TracksManagerBase{
     }
   }
 
+  // Add a region to a track
+  addRegion(track, data) {
+    Notes._keys[track].regions.push(data);
+  }
+
   // The keys
   static _keys = {};
+  static _instance;
 }
 
 export default Notes;

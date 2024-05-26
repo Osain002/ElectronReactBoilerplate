@@ -79,10 +79,7 @@ export class TracksManagerBase {
     return new Regions(this.child);
   }
 
-  // Add a region to a track
-  addRegion(track, data) {
-    let tracks = this.child.getTracksObject();
-    tracks[track].regions.push(data);
-  }
+  // Add a region
+  addRegion(track, data) {}
 
 }
