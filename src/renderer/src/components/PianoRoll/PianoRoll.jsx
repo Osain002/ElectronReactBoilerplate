@@ -1,49 +1,59 @@
-// import React, { useRef, useEffect } from 'react';
-// import PianoRollDrawer from '../../Kernel/PianoRoll/PianoRollDrawer';
-// import Overlay from '../../Core/components/OverlayBase/Overlay';
-// import Notes from '../../Kernel/PianoRoll/Notes';
-// import CanvasManager from '../../Core/Canvas/CanvasManager';
+import React, { useEffect, useRef, useState } from 'react';
+import Notes from "../../Kernel/PianoRoll/Notes";
+import CanvasManager from '../../Kernel/Canvas/CanvasManager';
+import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
 
-// const PianoRoll = ({showPianoRoll, setShowPianoRoll, track}) => {
-//   const canvasRef = useRef(null);
+const PianoRoll = ({ data }) => {
 
-//   useEffect(() => {
+  // Get the context
+  // const { projectContext } = useContext(AppContext);
+  // const project = projectContext.project;
 
-//     // Make sure we have a track
-//     if(!track || !showPianoRoll) {
-//       return;
-//     }
-//     console.log(track)
+  const [notesArr, setNotesArr] = useState([]);
+  const [canvasBundle, setCanvasBundle] = useState();
+  const [canvasWidth, setCanvasWidth] = useState(0);
+
+  const gridCanvasRef = useRef(null);
+  // const tracks = projectContext.project.tracks();
+
+  useEffect(() => {
     
-//     // Get the canvas
-//     const canvas = canvasRef.current;
-//     if(!canvas) {
-//       return;
-//     }
+    const notes = new Notes();
+    setNotesArr(notes.getTracks(true).reverse());
 
-//     // Add the canvas to the canvas manager
-//     CanvasManager.addCanvas('pianoRoll', canvas);
-
-//     // Draw the piano roll
-//     const keys = Notes.getKeys();
-//     const piano_drawer = new PianoRollDrawer(track.selected_region);
+    const canvas = gridCanvasRef.current;
+    if (!canvas) return;
     
+    // Redraw the grid
+    const num_divisions = data.region.width*16;
+    const bundle = CanvasManager.addCanvas(canvasTypes.grid, canvas, canvasTypes.piano_grid);
+    
+    let px_width = bundle.drawer.getCanvasWidthFromDivisions(num_divisions);
+    bundle.drawer.canvas.updateWidth(px_width)
+    setCanvasWidth(px_width);
 
-//   }, [track, showPianoRoll]); // Make sure to pass an empty dependency array to only run this effect once
+    bundle.drawer.drawHorizontalLines(88, 12);
+    bundle.drawer.drawGridVerticals(num_divisions, 16);
+  }, []);
 
-//   return (
-//     <Overlay showOverlay={showPianoRoll} setShowOverlay={setShowPianoRoll} classes={"w-screen h-4/5 overflow-y-scroll"}>
-//       <div className='flex flex-row w-full'>
-//         <div className=''>
-//           {Notes.getKeys().map((note) => <div className='border border-bottom-black text-xs'>{note.note}</div>)}
-//         </div>
-//         <div className='border w-full'>
-//           <canvas ref={canvasRef} width={800} height={600} className='w-full h-full overflow-x-scroll'/>
-//         </div>
-//       </div>
-//     </Overlay>
-//   );
-// };
 
-// export default PianoRoll;
+  return (
+    <div className='h-full'>
+      <div className='overflow-y-scroll' style={{maxHeight: '90%'}}>
+        <div className='h-fit flex flex-row'>
+          <div className='w-fit flex-grow h-fit' style={{fontSize: '10px'}}>
+            {notesArr.map(note => (
+              <div key={note.id} style={{height: '12px'}}>{note.name}</div>
+            ))}
+          </div>
+          <div className='border w-fit flex-grow' style={{height: '1056px'}}>
+            <canvas ref={gridCanvasRef} height={1056} className='h-full' style={{width: canvasWidth + "px"}} />
+          </div>
+        </div>
+      </div>
+      <div className='margin-auto border' style={{height: '10%'}}></div>
+    </div>
+  );
+}
 
+export default PianoRoll;

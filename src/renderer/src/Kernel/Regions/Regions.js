@@ -7,8 +7,8 @@
 //================================================================
 
 import ArrayExtractor from "../../Core/Arrays/ArrayExtractor";
-import TracksManager from "../Tracks/TracksManager";
-import Cursors from "../Utils/Cursors";
+import trackTypes from "../Tracks/TrackTypes";
+import { EditorTypes } from "../Utils/EditorTypes";
 import TrackCanvasConverter from "../Utils/TrackCanvasConverter";
 
 class Regions {
@@ -27,9 +27,11 @@ class Regions {
   addRegion(track_id, start, init_beats=4) {
     
     // Get the track
-    const track = TracksManager._tracks[track_id];
+    const track = this.manager.getTracksObject()[track_id];
     const region = {};
     region.track = track_id;
+    region.beat_start = start;
+    region.width = 4;
     region.drawing_data = {
       x: TrackCanvasConverter.timeToPx(start),
       y: track.drawing_data.start_y,
@@ -77,7 +79,6 @@ class Regions {
       let new_width = region.drawing_data.x + region.drawing_data.width - position;
       region.drawing_data.x = position;
       region.drawing_data.width = new_width
-      console.log(region);
     }
     
     // Resize from the right hand side
@@ -85,6 +86,10 @@ class Regions {
       let new_width = position - region.drawing_data.x;
       region.drawing_data.width = new_width;
     }
+
+    // Update the beat length
+    region.width = TrackCanvasConverter.pxToTime(region.drawing_data.width);
+
   }
 
   // Move a region
@@ -92,16 +97,17 @@ class Regions {
 
     // If we are snapping to the grid
     if(snap_to_grid) {
-      console.log(position);
       position = TrackCanvasConverter.nearestDivisionPx(position);
     }
 
+    // Get the amount we need to move
     let delta_x = 0;
     let previous_position = region.drawing_data.temp.prev_x;
     if(previous_position) {
       delta_x = position - previous_position; 
     }
 
+    // Update the region
     region.drawing_data.temp.prev_x = position;
     region.drawing_data.x += delta_x;
   }
@@ -131,7 +137,6 @@ class Regions {
 
   // Check if the mouse position is inside a region
   isInsideRegion(track_id, region, position) {
-    console.log(region, position);
     let drawing_data = region.drawing_data;
     return drawing_data.x <= position
     && drawing_data.x + drawing_data.width > position 
@@ -151,7 +156,7 @@ class Regions {
     for(let region of regions) {
       let near_edge = this.isNearRegionEdge(region, position, tolerance);
       let is_interior = this.isInsideRegion(track_id, region, position);
-      console.log(is_interior)
+
       // If we are close to an edge
       if(near_edge) {
         proximity_type = near_edge;
@@ -195,7 +200,6 @@ class Regions {
     if (!track) {
       return [];
     }
-
     return track.regions;
   }
   
@@ -212,6 +216,20 @@ class Regions {
   addToTrack(track_id, region) {
     return this.manager.addRegion(track_id, region);
   }
+
+  //==== Editor functions
+
+  getEditorType(track) {
+    if (track.type == trackTypes.VIRTUAL_INST) {
+      return EditorTypes.pianoRoll;
+    }
+  }
+
+  getRegionEditor(track, x_position) {
+    
+  }
+
+  //==== Utils
 
   // The proximity types
   static proximity_types = {

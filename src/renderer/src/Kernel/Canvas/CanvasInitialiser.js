@@ -39,6 +39,11 @@ class CanvasInitialiser {
     };
   }
 
+  updateWidth(width) {
+    this.width = width;
+    this.canvas.width = width;
+  }
+
   // Set width and height
   set_dimensions(width, height) {
     this.width = width;

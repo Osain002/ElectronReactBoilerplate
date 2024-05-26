@@ -36,6 +36,7 @@ function App() {
     setShowOverlay(true);
   }
 
+  // Handle incoming IPC messages
   useEffect(() => {
     IPCListener((messageType, ...args) => {
       switch(messageType) {
@@ -61,8 +62,7 @@ function App() {
   return (
     <AppContext.Provider value={AppContextValues}>
       <AppView />
-      <FormOverlay type={"new_track"} showOverlay={showOverlay} setShowOverlay={setShowOverlay}/>
-      {/* <PianoRoll /> */}
+      <FormOverlay type={formType} showOverlay={showOverlay} setShowOverlay={setShowOverlay}/>
     </AppContext.Provider>
   )
 }

@@ -12,8 +12,8 @@ class TrackCanvasConverter {
     return time * (this.beat_length_px);
   };
 
+  // Get the pixel value of the nearest grid division
   static nearestDivisionPx(x_position) {
-    console.log(x_position)
     return Math.round(x_position / this.beat_length_px) * this.beat_length_px;
   }
 

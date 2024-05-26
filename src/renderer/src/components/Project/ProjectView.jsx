@@ -11,7 +11,6 @@ const ProjectView = () => {
   const [pxWidth, setPxWidth] = useState(null);
   const [pxHeight, setPxHeight] = useState(null);
 
-
   // Get the context
   const { projectContext } = useContext(AppContext);
   const project = projectContext.project;
@@ -52,15 +51,17 @@ const ProjectView = () => {
   }, [projectContext]);
 
   return (
-    <div className='w-5/6 h-full overflow-x-scroll' style={{ position: 'relative' }}>
-      <div style={{ width: canvasWidth + 'px', height: '100%' }} ref={containerRef}>
-        {/* Grid Canvas */}
-        <canvas ref={gridCanvasRef} className='absolute top-0 left-0 h-full' style={{ width: canvasWidth + 'px' }} />
-
-        {/* Track layer */}
-        {(pxWidth && pxHeight) && <TracksLayer width={canvasWidth} pxWidth={pxWidth} pxHeight={pxHeight}/>}
+    <>
+      <div className='w-5/6 h-full overflow-x-scroll' style={{ position: 'relative' }}>
+        <div style={{ width: canvasWidth + 'px', height: '100%' }} ref={containerRef}>
+          {/* Grid Canvas */}
+          <canvas ref={gridCanvasRef} className='absolute top-0 left-0 h-full' style={{ width: canvasWidth + 'px' }} />
+    
+          {/* Track layer */}
+          {(pxWidth && pxHeight) && <TracksLayer width={canvasWidth} pxWidth={pxWidth} pxHeight={pxHeight}/>}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

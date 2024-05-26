@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AppContext } from '../../App';
 import CanvasManager from '../../Kernel/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
-import ToolTypes from '../../Kernel/ToolTypes';
-import TracksManager from '../../Kernel/Tracks/TracksManager';
 import { canvasClick, canvasDoubleClick, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/Utils/TracksLayer/TracksLayerFunctions';
+import EditorOverlay from '../Overlays/EditorOverlay';
 
 const TracksLayer = ({width, pxWidth, pxHeight}) => {
-  const { appContext, projectContext } = useContext(AppContext);
 
+  const { appContext, projectContext } = useContext(AppContext);
+  const [editorData, setEditorData] = useState();
+  const [showEditor, setShowEditor] = useState();
+  
   // Make a ref for the canvas
   const tracksCanvasRef = useRef(null);
 
@@ -23,6 +25,20 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
     bundle.drawer.drawRegions();
   }, []);
 
+  // Open an editor overlay
+  function openEditorOverlay(data) {
+    setEditorData(data)
+    setShowEditor(true);
+  }
+
+  function doubleClick(event) {
+    let response = canvasDoubleClick(tracks, appContext.currentTool, event)
+    console.log(response)
+    if(response && response.editor) {
+      return openEditorOverlay(response);
+    }
+  }
+
   return (
     <>
       <canvas 
@@ -31,13 +47,13 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
         height={pxHeight} 
         className='absolute top-0 left-0 h-full' 
         style={{ width: width + 'px' }} 
-        onDoubleClick={(event) => canvasDoubleClick(tracks, appContext.currentTool, event)}
+        onDoubleClick={doubleClick}
         onClick={(event) => canvasClick(tracks, appContext.currentTool, event)}
         onMouseDown={(event) => canvasMouseDown(tracks, appContext.currentTool, event)}
         onMouseMove={(event) => canvasMouseMove(tracks, appContext.currentTool, event)}
         onMouseUp={(event) => canvasMouseUp(tracks, appContext.currentTool, event)}
       />
-      {/* <PianoRoll showPianoRoll={showPianoRoll} setShowPianoRoll={setShowPianoRoll} track={tracks.getSelectedTrack()}/> */}
+      <EditorOverlay data={editorData} showOverlay={showEditor} setShowOverlay={setShowEditor}/>
     </>
   )
 }

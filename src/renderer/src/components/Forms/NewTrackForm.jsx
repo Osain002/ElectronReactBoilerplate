@@ -28,6 +28,8 @@ const NewTrackForm = () => {
       .setType(trackType)
       .setColour(colour)
       .add();
+    
+    console.log(tracks);
 
     // Close the overlay
     appContext.setShowOverlay(false);

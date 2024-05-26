@@ -44,6 +44,17 @@ class TrackDataBuilder {
     return this;
   }
 
+  // Set any extra data
+  setExtraData(key, data) {
+    this.track_data.key = data;
+    return this;
+  }
+
+  // Set the height
+  setHeight(height) {
+    this.track_data.drawing_data.height = height;
+    return this;
+  }
   // Add the track to the track manager
   add() {
     return this.manager.addTrack(this.track_data);
