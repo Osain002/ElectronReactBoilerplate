@@ -1,4 +1,5 @@
 import './App.css'
+import Mixer from './components/Mixer/Mixer'
 import ProjectView from './components/Project/ProjectView'
 import TracksView from './components/Tracks/TracksView'
 import TransportBar from './components/Transport/TransportBar'
@@ -11,6 +12,7 @@ function AppView() {
       <div className='flex flex-row w-full' style={{height: 'calc(100% - 2rem - 6px)'}}>
         <TracksView />
         <ProjectView />
+        <Mixer />
       </div>
     </div>
   )

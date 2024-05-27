@@ -59,12 +59,12 @@ export const RadioGroup = ({ label, options, selectedValue, onChange }) => {
   );
 };
 
-const Select = ({ label, options, onChange, required, containerClasses, emptyByDefault=true}) => {
+const Select = ({ label, options, onChange, required, containerClasses, emptyByDefault=false}) => {
   return (
     <div className={"flex flex-row items-center mb-1" + containerClasses}>
       {label && <label className="w-fit mr-2 text-white text-xs">{label}{required ? <span className="text-red-500">*</span> : ""} </label>}
-      <select className="border border-gray-300 rounded-md w-64 focus:outline-none focus:border-blue-500 bg-slate-800 border-slate-400 w-fit text-sm" onChange={onChange}>
-        {!emptyByDefault ?? <option disabled selected hidden>Select</option>}
+      <select defaultValue={-1} className="text-white border border-gray-300 rounded-md w-64 focus:outline-none focus:border-blue-500 bg-slate-800 border-slate-400 w-fit text-sm" onChange={onChange}>
+        {emptyByDefault && <option disabled selected value={-1}>Select</option>}
         {options.to_array().map(option => (
           <option key={option} value={option}>{options.to_string(option)}</option>
         ))}
