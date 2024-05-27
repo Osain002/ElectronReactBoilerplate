@@ -2,27 +2,22 @@ import CanvasManager from "../Canvas/CanvasManager";
 import canvasTypes from "../Canvas/CanvasTypes";
 import Regions from "../Regions/Regions";
 import ToolTypes from "../ToolTypes";
+import KeyTypes from "../Utils/KeyTypes";
 import TrackCanvasConverter from "../Utils/TrackCanvasConverter";
 
 // Handle canvas double click
 export function canvasDoubleClick(tracks, tool, event) {
-  let response = null;
   let canvas = CanvasManager.getCanvas(canvasTypes.piano_regions);
   canvas.eventHandler.mouseEvent(event, tracks, function (x_position, track) {
 
     // Add a new region
     if (tool == ToolTypes.draw) {
       tracks.regions().addRegion(track, x_position);
-      console.log(tracks.regions().getAllRegions());
     }
 
     // Redraw the regions
     canvas.drawer.drawRegions(tracks);
   }, true);
-
-
-  return response;
-
 }
 
 // Handle canvas click
@@ -35,7 +30,6 @@ export function canvasClick(tracks, tool, event) {
 
     // Redraw the regions
     canvas.drawer.drawRegions(tracks);
-
   })
 
   console.log(tracks.regions().getAllRegions())
@@ -106,4 +100,20 @@ export function canvasMouseUp(tracks, tool, event) {
     handler.stopDragging();
     tracks.regions().clearTempDrawingData();
   })
+}
+
+// Handle a key press event
+export function canvasKeyPress(tracks, tool, event) {
+
+  // Get the canvas bundle
+  let canvas = CanvasManager.getCanvas(canvasTypes.track);
+
+  // Get the action for this key press
+  let action = KeyTypes.getAction(event);
+  if(action == KeyTypes._action_delete) {
+    tracks.regions().deleteSelectedRegion();
+  }
+  
+  canvas.drawer.drawRegions(tracks);
+
 }

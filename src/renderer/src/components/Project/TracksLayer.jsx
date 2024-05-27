@@ -4,6 +4,7 @@ import CanvasManager from '../../Kernel/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
 import { canvasClick, canvasDoubleClick, canvasKeyPress, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/Utils/TracksLayer/TracksLayerFunctions';
 import EditorOverlay from '../Overlays/EditorOverlay';
+import ToolTypes from '../../Kernel/ToolTypes';
 
 const TracksLayer = ({width, pxWidth, pxHeight}) => {
 
@@ -25,6 +26,13 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
     bundle.drawer.drawRegions(tracks);
   }, []);
 
+  // Redraw the tracks once an editor overlay is closed
+  useEffect(() => {
+    let bundle = CanvasManager.getCanvas(canvasTypes.track);
+    bundle.drawer.drawRegions(tracks);
+    appContext.setTool(ToolTypes.mouse);
+  }, [showEditor]);
+
   // Open an editor overlay
   function openEditorOverlay(data) {
     setEditorData(data)
@@ -34,7 +42,6 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
   // Extend the double click event
   function doubleClick(event) {
     let response = canvasDoubleClick(tracks, appContext.currentTool, event)
-    console.log(response)
     if(response && response.editor) {
       return openEditorOverlay(response);
     }

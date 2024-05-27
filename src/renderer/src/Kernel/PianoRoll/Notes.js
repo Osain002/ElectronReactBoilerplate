@@ -2,14 +2,15 @@ import {TracksManagerBase} from "../Tracks/Base/TracksManagerBase";
 
 class Notes extends TracksManagerBase{
 
-  constructor() {
+  constructor(data) {
+
     if(Notes._instance) {
-      return Notes._instance
+      return Notes._instance;
     }
 
     super(null)
     this.child = this;
-    this.setupKeys();
+    this.setupKeys(data);
     Notes._instance = this;
   }
 
@@ -18,7 +19,13 @@ class Notes extends TracksManagerBase{
   };
 
   // Setup the keys
-  setupKeys() {
+  setupKeys(data) {
+
+    if(data) {
+      console.log(data)
+      Notes._keys = data;
+      return;
+    }
 
     // Start the notes array
     Notes._keys = {};
@@ -46,6 +53,11 @@ class Notes extends TracksManagerBase{
   // Add a region to a track
   addRegion(track, data) {
     Notes._keys[track].regions.push(data);
+  }
+
+  // Destroy this instance
+  destroy() {
+    Notes._instance = null;
   }
 
   // The keys

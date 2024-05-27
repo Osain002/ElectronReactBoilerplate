@@ -3,24 +3,24 @@ import Notes from "../../Kernel/PianoRoll/Notes";
 import CanvasManager from '../../Kernel/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
 import { ToolForm } from '../Forms/TransportForm';
-import { canvasClick, canvasDoubleClick, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/PianoRoll/PianoRollRegionsFunctions';
+import { canvasClick, canvasDoubleClick, canvasKeyPress, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/PianoRoll/PianoRollRegionsFunctions';
 import { AppContext } from '../../App';
 
-const PianoRoll = ({ data }) => {
+const PianoRoll = ({ data, setShowPianoRoll }) => {
 
   // Get the context
-  const { projectContext, appContext } = useContext(AppContext);
-  // const project = projectContext.project;
+  const { appContext } = useContext(AppContext);
 
+  // Store the canvas width state
   const [canvasWidth, setCanvasWidth] = useState(0);
 
+  // The canvas refs
   const gridCanvasRef = useRef(null);
   const regionCanvasRef = useRef(null);
 
-  // const tracks = projectContext.project.tracks();
-  const notes = new Notes();
+  const notes = new Notes(data.region.contents);
 
-  console.log(Notes._keys)
+  // Setup the piano roll
   useEffect(() => {
     
     const canvas = gridCanvasRef.current;
@@ -47,6 +47,14 @@ const PianoRoll = ({ data }) => {
     bundle.drawer.drawRegions(notes);
 
   }, []);
+
+  // Save the data to the region
+  function saveToRegion() {
+    data.region.contents = Notes._keys;
+    data.region.division = 16;
+    notes.destroy();
+    setShowPianoRoll(false);
+  }
 
   return (
     <div className='h-full'>
@@ -81,17 +89,20 @@ const PianoRoll = ({ data }) => {
                 left: 0,
                 zIndex: 2 
               }}
+              tabIndex={0}
               onDoubleClick={(event) => canvasDoubleClick(notes, appContext.currentTool, event)}
               onClick={(event) => canvasClick(notes, appContext.currentTool, event)}
               onMouseDown={(event) => canvasMouseDown(notes, appContext.currentTool, event)}
               onMouseMove={(event) => canvasMouseMove(notes, appContext.currentTool, event)}
               onMouseUp={(event) => canvasMouseUp(notes, appContext.currentTool, event)}
+              onKeyUp={(event) => canvasKeyPress(notes, appContext.currentTool, event)}
             />
           </div>
         </div>
       </div>
-      <div className='margin-auto border' style={{height: '10%'}}>
+      <div className="mx-auto p-4 flex flex-col justify-between h-10 rounded">
         <ToolForm />
+        <button className="self-end mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors duration-300" onClick={saveToRegion}>Close</button>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import ArrayExtractor from "../../../Core/Arrays/ArrayExtractor";
+import ArrayTools from "../../../Core/Arrays/ArrayTools";
 import TracksManager from "../../Tracks/TracksManager";
 import CanvasDrawer from "../Base/CanvasDrawer";
 
@@ -28,6 +29,7 @@ class RegionDrawer extends CanvasDrawer {
     // Draw all the regions
     for(let region of regions) {
       this.drawEmptyRegion(region.drawing_data, region.selected);
+      this.drawContentsPreview(region);
     }    
   }
 
@@ -50,6 +52,47 @@ class RegionDrawer extends CanvasDrawer {
       line_width
     );
   }
+
+  drawContentsPreview(region) {
+    this.drawPianoRollPreview(region);
+  }
+
+  drawPianoRollPreview(region) {
+    // Check if the region has contents
+    if (!region.contents) {
+      return;
+    }
+  
+    // Get the region drawing data
+    const { drawing_data, width, division } = region;
+    const { height, x: startX, y: startY } = drawing_data;
+    const noteHeight = height / 88;
+    const contents = ArrayTools.objectToArray(region.contents);
+    const notes = ArrayExtractor.extractKey(contents, "regions");
+    const divisionWidth = drawing_data.width / (width * division);
+  
+    // Iterate through the notes
+    notes.forEach((keyNotes, i) => {
+      // Calculate the y-coordinate for the current key
+      const y = startY + i * noteHeight;
+  
+      // Draw each note
+      keyNotes.forEach(note => {
+        const { beat_start: beatStart, width: noteWidth } = note;
+  
+        // Calculate the x-coordinate and width for the current note
+        const x = startX + beatStart * divisionWidth;
+        const width = noteWidth * divisionWidth;
+  
+        // Ensure the note does not extend past the end of the region
+        if (x + width <= startX + drawing_data.width) {
+          // Draw the note
+          this.draw_rectangle(x, y, width, 2, 'black', 'black', 1);
+        }
+      });
+    });
+  }
+  
 }
 
 export default RegionDrawer;

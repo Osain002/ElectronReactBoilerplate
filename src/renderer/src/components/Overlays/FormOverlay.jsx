@@ -4,7 +4,7 @@ import FormFactory from '../Forms/FormFactory'
 
 const FormOverlay = ({type, showOverlay, setShowOverlay}) => {
   return (
-    <Overlay showOverlay={showOverlay} setShowOverlay={setShowOverlay}>
+    <Overlay showOverlay={showOverlay} setShowOverlay={setShowOverlay} showCloseButton={true}>
       <FormFactory type={type} />
     </Overlay>
   )

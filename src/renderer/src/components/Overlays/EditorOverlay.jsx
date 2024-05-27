@@ -12,9 +12,9 @@ const InvalidEditor = ({type}) => {
   )
 }
 
-const EditorOverlayFactory = ({data, type}) => {
+const EditorOverlayFactory = ({data, type, setShowOverlay}) => {
   switch(type) {
-    case EditorTypes.pianoRoll: return <PianoRoll data={data}/>
+    case EditorTypes.pianoRoll: return <PianoRoll data={data} setShowPianoRoll={setShowOverlay}/>
     default: return <InvalidEditor type={type} />
   }
 }
@@ -25,7 +25,7 @@ const EditorOverlay = ({data, showOverlay, setShowOverlay}) => {
   }
   return (
     <Overlay showOverlay={showOverlay} setShowOverlay={setShowOverlay} classes={"w-screen h-4/5"}>
-      <EditorOverlayFactory data={data} type={data.editor}/>
+      <EditorOverlayFactory data={data} type={data.editor} setShowOverlay={setShowOverlay}/>
     </Overlay>
   )
 }
