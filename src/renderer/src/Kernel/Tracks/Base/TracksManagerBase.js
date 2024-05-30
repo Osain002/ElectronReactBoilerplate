@@ -4,12 +4,10 @@
 //
 //==========================================================
 import ArrayTools from "../../../Core/Arrays/ArrayTools";
-import Regions from "../../Regions/Regions";
 import TrackDataBuilder from "../TrackDataBuilder";
 //==========================================================
 export class TracksManagerBase {
 
-  
   constructor(child) {
     this.child = child
   }
@@ -75,9 +73,7 @@ export class TracksManagerBase {
   //==== Regions
 
   // Get the regions
-  regions() {
-    return new Regions(this.child);
-  }
+  regions() {}
 
   // Add a region
   addRegion(track, data) {}

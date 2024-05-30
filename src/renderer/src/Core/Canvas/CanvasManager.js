@@ -12,10 +12,13 @@ class CanvasManager {
   // Add a new canvas
   static addCanvas(type, canvas, key) {
     
+    // If no key is explicitely set, use the type
     if(!key) {
       key = type;
     }
 
+    // Initialise the canvas. The initialised canvas contains
+    // a drawer and an event adapter
     let init_canvas = new CanvasInitialiser(canvas).init(type);
     CanvasManager.canvases[key] = init_canvas;
     return init_canvas;
@@ -28,7 +31,7 @@ class CanvasManager {
 
   // Get the event handler for a canvas
   static getEventHandler(key) {
-    return CanvasManager.canvases[key].eventHandler;
+    return CanvasManager.canvases[key].eventAdapter;
   }
 
   // Object to store the canvases

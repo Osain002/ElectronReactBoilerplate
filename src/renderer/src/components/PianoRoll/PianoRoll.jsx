@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Notes from "../../Kernel/PianoRoll/Notes";
-import CanvasManager from '../../Kernel/Canvas/CanvasManager';
+import CanvasManager from '../../Core/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
 import { ToolForm } from '../Forms/TransportForm';
-import { canvasClick, canvasDoubleClick, canvasKeyPress, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/PianoRoll/PianoRollRegionsFunctions';
 import { AppContext } from '../../App';
+import RegionCanvasEventHandler from '../../Kernel/Regions/RegionCanvasEventHandler';
 
 const PianoRoll = ({ data, setShowPianoRoll }) => {
 
@@ -13,6 +13,7 @@ const PianoRoll = ({ data, setShowPianoRoll }) => {
 
   // Store the canvas width state
   const [canvasWidth, setCanvasWidth] = useState(0);
+  const [eventHandler, setEventHandler] = useState();
 
   // The canvas refs
   const gridCanvasRef = useRef(null);
@@ -45,6 +46,10 @@ const PianoRoll = ({ data, setShowPianoRoll }) => {
     bundle = CanvasManager.addCanvas(canvasTypes.track, region_canvas, canvasTypes.piano_regions);
     bundle.drawer.canvas.updateWidth(px_width)
     bundle.drawer.drawRegions(notes);
+
+    // Get an event handler
+    let eventHandler = new RegionCanvasEventHandler(notes, bundle, false);
+    setEventHandler(eventHandler);
 
   }, []);
 
@@ -90,12 +95,12 @@ const PianoRoll = ({ data, setShowPianoRoll }) => {
                 zIndex: 2 
               }}
               tabIndex={0}
-              onDoubleClick={(event) => canvasDoubleClick(notes, appContext.currentTool, event)}
-              onClick={(event) => canvasClick(notes, appContext.currentTool, event)}
-              onMouseDown={(event) => canvasMouseDown(notes, appContext.currentTool, event)}
-              onMouseMove={(event) => canvasMouseMove(notes, appContext.currentTool, event)}
-              onMouseUp={(event) => canvasMouseUp(notes, appContext.currentTool, event)}
-              onKeyUp={(event) => canvasKeyPress(notes, appContext.currentTool, event)}
+              onDoubleClick={(event) => eventHandler.canvasDoubleClick(appContext.currentTool, event)}
+              onClick={(event) => eventHandler.canvasClick(appContext.currentTool, event)}
+              onMouseDown={(event) => eventHandler.canvasMouseDown(appContext.currentTool, event)}
+              onMouseMove={(event) => eventHandler.canvasMouseMove(appContext.currentTool, event)}
+              onMouseUp={(event) => eventHandler.canvasMouseUp(appContext.currentTool, event)}
+              onKeyUp={(event) => eventHandler.canvasKeyPress(appContext.currentTool, event)}
             />
           </div>
         </div>

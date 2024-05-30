@@ -3,6 +3,7 @@
 // This class manages the project tracks
 //
 //==========================================================
+import TrackRegions from "../Regions/TrackRegions";
 import {TracksManagerBase} from "./Base/TracksManagerBase";
 //==========================================================
 
@@ -23,16 +24,14 @@ class TracksManager extends TracksManagerBase {
     TracksManager._tracks[track].regions.push(data);
   }
 
+  // Get the regions
+  regions() {
+    return new TrackRegions(this);
+  }
+
   // The tracks object
   static _tracks = {};
 
-}
-
-class Notes extends TracksManagerBase {
-  constructor() {
-    super(null);
-    this.child = this;
-  }
 }
 
 export default TracksManager;

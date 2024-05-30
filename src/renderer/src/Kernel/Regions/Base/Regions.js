@@ -3,13 +3,12 @@
 // This class controls various types of region in the DAW
 //
 //================================================================
-// const ArrayExtractor = require("../../Core/Arrays/ArrayExtractor");
 //================================================================
 
-import ArrayExtractor from "../../Core/Arrays/ArrayExtractor";
-import trackTypes from "../Tracks/TrackTypes";
-import { EditorTypes } from "../Utils/EditorTypes";
-import TrackCanvasConverter from "../Utils/TrackCanvasConverter";
+import ArrayExtractor from "../../../Core/Arrays/ArrayExtractor";
+import trackTypes from "../../Tracks/TrackTypes";
+import { EditorTypes } from "../../Utils/EditorTypes";
+import TrackCanvasConverter from "../../Utils/TrackCanvasConverter";
 import { nanoid } from 'nanoid';
 
 class Regions {
@@ -57,17 +56,6 @@ class Regions {
     }
   }
 
-  deleteRegion(track, id) {
-    const tracks = this.manager.getTracksObject();
-    for(let i=0; i<tracks[track].regions.length; i++) {
-      let region = tracks[track].regions[i];
-      if(region.id == id) {
-        tracks[track].regions.splice(i, 1);
-        console.log('re', tracks[track].regions)
-      }
-    }
-  }
-
   // Select a region
   selectRegion(track_id, position) {
 
@@ -97,26 +85,42 @@ class Regions {
       position = TrackCanvasConverter.nearestDivisionPx(position);
     }
 
+
+    let new_width = region.drawing_data.width;
+    let new_x = region.drawing_data.x;
+
     // Resize from the left hand side
     if (edge == Regions.proximity_types.left_edge) {
       let new_width = region.drawing_data.x + region.drawing_data.width - position;
-      region.drawing_data.x = position;
-      region.drawing_data.width = new_width
+      new_x = position
     }
     
     // Resize from the right hand side
     if(edge == Regions.proximity_types.right_edge) {
-      let new_width = position - region.drawing_data.x;
-      region.drawing_data.width = new_width;
+      new_width = position - region.drawing_data.x;
+    }
+    
+    // Check the number of divisions
+    let division_width = TrackCanvasConverter.pxToTime(region.drawing_data.width);
+    if(division_width <= 1) {
+      return;
     }
 
     // Update the beat length
-    region.width = TrackCanvasConverter.pxToTime(region.drawing_data.width);
+    region.drawing_data.x = new_x;
+    region.drawing_data.width = new_width
+    region.width = division_width;
 
   }
 
+  // Set the region we are currently moving
+  setEditingRegion(region) {}
+
+  // Get moving region
+  getEditingRegion() {}
+
   // Move a region
-  moveRegion(region, position, snap_to_grid) {
+  moveRegion(track, region, position, snap_to_grid) {
 
     // If we are snapping to the grid
     if(snap_to_grid) {
@@ -133,6 +137,25 @@ class Regions {
     // Update the region
     region.drawing_data.temp.prev_x = position;
     region.drawing_data.x += delta_x;
+
+    // If we need to move the region to a different track
+    if(track != null && track != region.track) {
+      console.log(track, region)
+      this.changeTrack(track, region);
+    }
+
+
+  }
+
+  // Move a region to a different track
+  changeTrack(track, region) {
+    let new_track = this.manager.getTrack(track);
+    let region_copy = structuredClone(region);
+    region_copy.track = track;
+    region_copy.drawing_data.y = new_track.drawing_data.start_y;
+    this.deleteRegion(region.track, region.id);
+    this.addToTrack(track, region_copy);
+    this.setEditingRegion(region_copy);
   }
 
 
@@ -216,6 +239,10 @@ class Regions {
     return null;
   }
   
+  // Get the selected region
+  getSelectedRegion() {
+    
+  }
 
   // Get the regions on a track
   getTrackRegions(track_id) {
@@ -240,6 +267,19 @@ class Regions {
     return this.manager.addRegion(track_id, region);
   }
 
+  // Delete a region
+  deleteRegion(track, id) {
+    const tracks = this.manager.getTracksObject();
+    for(let i=0; i<tracks[track].regions.length; i++) {
+      let region = tracks[track].regions[i];
+      if(region.id == id) {
+        tracks[track].regions.splice(i, 1);
+        console.log('re', tracks[track].regions)
+      }
+    }
+  }
+
+
   //==== Editor functions
 
   getEditorType(track) {
@@ -247,7 +287,6 @@ class Regions {
       return EditorTypes.pianoRoll;
     }
   }
-
 
   //==== Utils
 

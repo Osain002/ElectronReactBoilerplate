@@ -12,6 +12,8 @@ import FormOverlay from './components/Overlays/FormOverlay';
 import GridDivisions from './Kernel/ProjectView/GridDivisions';
 import Project from './Kernel/Project/Project';
 import ToolTypes from './Kernel/ToolTypes';
+import DraggableWindow from './Core/components/Draggable/Window';
+import { AudioContextProvider } from './Audio/React/AudioContextProvider';
 
 // Create an app context
 export const AppContext = createContext(null);
@@ -60,10 +62,12 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={AppContextValues}>
-      <AppView />
-      <FormOverlay type={formType} showOverlay={showOverlay} setShowOverlay={setShowOverlay}/>
-    </AppContext.Provider>
+    <AudioContextProvider>
+      <AppContext.Provider value={AppContextValues}>
+        <AppView />
+        <FormOverlay type={formType} showOverlay={showOverlay} setShowOverlay={setShowOverlay}/>
+      </AppContext.Provider>
+    </AudioContextProvider>
   )
 }
 

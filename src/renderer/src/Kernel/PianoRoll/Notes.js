@@ -1,3 +1,4 @@
+import PianoRollRegions from "../Regions/PianoRollRegions";
 import {TracksManagerBase} from "../Tracks/Base/TracksManagerBase";
 
 class Notes extends TracksManagerBase{
@@ -22,7 +23,6 @@ class Notes extends TracksManagerBase{
   setupKeys(data) {
 
     if(data) {
-      console.log(data)
       Notes._keys = data;
       return;
     }
@@ -48,6 +48,10 @@ class Notes extends TracksManagerBase{
         .setExtraData("sound", track_data)
         .add();
     }
+  }
+
+  regions() {
+    return new PianoRollRegions(this)
   }
 
   // Add a region to a track

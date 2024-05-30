@@ -1,4 +1,4 @@
-import CanvasUtilityFactory from "./CanvasUtilityFactory";
+import CanvasUtilityFactory from "../../Kernel/Canvas/CanvasUtilityFactory";
 
 class CanvasInitialiser {
 
@@ -60,7 +60,7 @@ class CanvasInitialiser {
   // Return a drawer and event handler
   init(type) {
     return {
-      eventHandler: CanvasUtilityFactory.getEventHandler(type, this),
+      eventAdapter: CanvasUtilityFactory.getEventHandler(type, this),
       drawer: CanvasUtilityFactory.getDrawer(type, this)
     }
   }

@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AppContext } from '../../App';
-import CanvasManager from '../../Kernel/Canvas/CanvasManager';
+import CanvasManager from '../../Core/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
-import { canvasClick, canvasDoubleClick, canvasKeyPress, canvasMouseDown, canvasMouseMove, canvasMouseUp } from '../../Kernel/Utils/TracksLayer/TracksLayerFunctions';
 import EditorOverlay from '../Overlays/EditorOverlay';
 import ToolTypes from '../../Kernel/ToolTypes';
+import RegionCanvasEventHandler from '../../Kernel/Regions/RegionCanvasEventHandler';
 
 const TracksLayer = ({width, pxWidth, pxHeight}) => {
 
   const { appContext, projectContext } = useContext(AppContext);
   const [editorData, setEditorData] = useState();
   const [showEditor, setShowEditor] = useState();
+  const [eventHandler, setEventHandler] = useState();
   
   // Make a ref for the canvas
   const tracksCanvasRef = useRef(null);
@@ -20,10 +21,16 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
 
   // Load the canvas
   useEffect(() => {
+
+    // Initialise the canvas
     const canvas = tracksCanvasRef.current;
     if (!canvas) return;
     let bundle = CanvasManager.addCanvas(canvasTypes.track, canvas);
     bundle.drawer.drawRegions(tracks);
+
+    // Initialise the event handler
+    let handler = new RegionCanvasEventHandler(tracks, bundle, true);
+    setEventHandler(handler);
   }, []);
 
   // Redraw the tracks once an editor overlay is closed
@@ -41,7 +48,7 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
 
   // Extend the double click event
   function doubleClick(event) {
-    let response = canvasDoubleClick(tracks, appContext.currentTool, event)
+    let response = eventHandler.canvasDoubleClick(appContext.currentTool, event)
     if(response && response.editor) {
       return openEditorOverlay(response);
     }
@@ -57,11 +64,11 @@ const TracksLayer = ({width, pxWidth, pxHeight}) => {
         className='absolute top-0 left-0 h-full' 
         style={{ width: width + 'px' }} 
         onDoubleClick={doubleClick}
-        onClick={(event) => canvasClick(tracks, appContext.currentTool, event)}
-        onMouseDown={(event) => canvasMouseDown(tracks, appContext.currentTool, event)}
-        onMouseMove={(event) => canvasMouseMove(tracks, appContext.currentTool, event)}
-        onMouseUp={(event) => canvasMouseUp(tracks, appContext.currentTool, event)}
-        onKeyUp={(event) => canvasKeyPress(tracks, appContext.currentTool, event)}
+        onClick={(event) => eventHandler.canvasClick(appContext.currentTool, event)}
+        onMouseDown={(event) => eventHandler.canvasMouseDown(appContext.currentTool, event)}
+        onMouseMove={(event) => eventHandler.canvasMouseMove(appContext.currentTool, event)}
+        onMouseUp={(event) => eventHandler.canvasMouseUp(appContext.currentTool, event)}
+        onKeyUp={(event) => eventHandler.canvasKeyPress(appContext.currentTool, event)}
       />
       <EditorOverlay data={editorData} showOverlay={showEditor} setShowOverlay={setShowEditor}/>
     </>

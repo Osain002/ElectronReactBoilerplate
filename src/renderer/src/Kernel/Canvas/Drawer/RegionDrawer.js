@@ -1,7 +1,7 @@
 import ArrayExtractor from "../../../Core/Arrays/ArrayExtractor";
 import ArrayTools from "../../../Core/Arrays/ArrayTools";
 import TracksManager from "../../Tracks/TracksManager";
-import CanvasDrawer from "../Base/CanvasDrawer";
+import CanvasDrawer from "../../../Core/Canvas/Base/CanvasDrawerBase";
 
 class RegionDrawer extends CanvasDrawer {
   

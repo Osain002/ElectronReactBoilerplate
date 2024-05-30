@@ -1,6 +1,6 @@
 
 
-class CanvasEventHandler {
+class CanvasEventAdapterBase {
 
   constructor(initialised_canvas) {
     this.canvas = initialised_canvas;
@@ -22,4 +22,4 @@ class CanvasEventHandler {
 
 }
 
-export default CanvasEventHandler;
+export default CanvasEventAdapterBase;

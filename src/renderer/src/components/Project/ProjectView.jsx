@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext, useState } from 'react';
 import { AppContext } from '../../App';
 import TracksLayer from './TracksLayer';
-import CanvasManager from '../../Kernel/Canvas/CanvasManager';
+import CanvasManager from '../../Core/Canvas/CanvasManager';
 import canvasTypes from '../../Kernel/Canvas/CanvasTypes';
 
 const ProjectView = () => {

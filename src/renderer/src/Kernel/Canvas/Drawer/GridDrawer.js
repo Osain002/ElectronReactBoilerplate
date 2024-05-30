@@ -1,4 +1,4 @@
-import CanvasDrawer from "../Base/CanvasDrawer";
+import CanvasDrawer from "../../../Core/Canvas/Base/CanvasDrawerBase";
 
 class GridDrawer extends CanvasDrawer {
 

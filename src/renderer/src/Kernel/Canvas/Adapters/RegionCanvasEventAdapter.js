@@ -1,9 +1,9 @@
-import Regions from "../../Regions/Regions";
+import Regions from "../../Regions/TrackRegions";
 import Cursors from "../../Utils/Cursors";
 import TrackCanvasConverter from "../../Utils/TrackCanvasConverter";
-import CanvasEventHandler from "../Base/CanvasEventHandler";
+import CanvasEventAdapterBase from "../../../Core/Canvas/Base/CanvasEventAdapterBase";
 
-class RegionCanvasEventHandler extends CanvasEventHandler {
+class RegionCanvasEventAdapter extends CanvasEventAdapterBase {
 
   constructor(initialised_canvas) {
    super(initialised_canvas);
@@ -57,4 +57,4 @@ class RegionCanvasEventHandler extends CanvasEventHandler {
   
 }
 
-export default RegionCanvasEventHandler;
+export default RegionCanvasEventAdapter;

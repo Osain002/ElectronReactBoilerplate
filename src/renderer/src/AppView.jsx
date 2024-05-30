@@ -12,7 +12,7 @@ function AppView() {
       <div className='flex flex-row w-full' style={{height: 'calc(100% - 2rem - 6px)'}}>
         <TracksView />
         <ProjectView />
-        <Mixer />
+        {/* <Mixer /> */}
       </div>
     </div>
   )

@@ -2,17 +2,18 @@ import GridDrawer from "./Drawer/GridDrawer";
 import RegionDrawer from "./Drawer/RegionDrawer";
 
 import canvasTypes from "./CanvasTypes";
-import GridCanvasEventHandler from "./EventHandlers/GridCanvasEventHandler";
-import RegionCanvasEventHandler from "./EventHandlers/RegionCanvasEventHandler";
+import GridCanvasEventAdapter from "./Adapters/GridCanvasEventAdapter";
+import RegionCanvasEventAdapter from "./Adapters/RegionCanvasEventAdapter";
+import CanvasUtilityFactoryBase from "../../Core/Canvas/Base/CanvasUtilityFactoryBase";
 
-class CanvasUtilityFactory {
+class CanvasUtilityFactory extends CanvasUtilityFactoryBase {
 
   // Get a canvas event handler
   static getEventHandler(type, initialised_canvas) {
     if (type == canvasTypes.grid) {
-      return new GridCanvasEventHandler(initialised_canvas);
+      return new GridCanvasEventAdapter(initialised_canvas);
     } else if (type == canvasTypes.track) {
-      return new RegionCanvasEventHandler(initialised_canvas);
+      return new RegionCanvasEventAdapter(initialised_canvas);
     }
   }
 
